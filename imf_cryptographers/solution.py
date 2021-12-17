@@ -140,20 +140,23 @@ def encrypt_all_sol(messages):
         encrypted_messages.append(make_code(message, shift))
     return encrypted_messages
 
-def decrypt_all_sol(encrypted_messages):
+def decrypt_all_sol(encrypted_messages, no_print=False):
     decrypted_messages = []
     for ciphertext in encrypted_messages:
         plaintext = break_code(ciphertext)
         decrypted_messages.append(plaintext)
-    for i, plaintext in enumerate(decrypted_messages):
-        if plaintext != messages[i]:
-            print("Expected output:", messages[i])
-            print("Output generated:", plaintext)
-            return
-    print("All messages have been decrypted correctly")
-    print(json.dumps(decrypted_messages, indent=3))
+    if not no_print:
+        for i, plaintext in enumerate(decrypted_messages):
+            if plaintext != messages[i]:
+                print("Expected output:", messages[i])
+                print("Output generated:", plaintext)
+                return
+        print("All messages have been decrypted correctly")
+        print(json.dumps(decrypted_messages, indent=3))
+    else:
+        return decrypted_messages
 
-def get_encrypted_messages():
+def intercept_encrypted_messages():
     encrypted_messages = encrypt_all_sol(messages)
     print(json.dumps(encrypted_messages, indent=3))
     return encrypted_messages

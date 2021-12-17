@@ -2,9 +2,9 @@
 from setuptools import setup
 
 setup(
-    name='project_1_tests',
+    name='imf_cryptographers',
     version='0.0.1',
-    packages=['project_1_tests'],
+    packages=['imf_cryptographers'],
     include_package_data=True,
     install_requires=[
     ],

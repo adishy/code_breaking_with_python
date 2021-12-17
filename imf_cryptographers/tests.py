@@ -1,5 +1,6 @@
 import json
 from random import randrange, sample
+from imf_cryptographers.solution import decrypt_all_sol
 
 def test_convert_to_natural_index(test_func):
     for i in range(26):
@@ -107,16 +108,37 @@ def test_encrypt_sentence(test_func):
     print("✔✔ Your implementation is correct!")
                             
 def test_decrypt_all(test_func, encrypted_messages):
-    decrypted_messages = []
-    for ciphertext in encrypted_messages:
-        plaintext = break_code(ciphertext)
-        decrypted_messages.append(plaintext)
-    for i, plaintext in enumerate(decrypted_messages):
-        if plaintext != messages[i]:
-            print("Expected output:", messages[i])
-            print("Output generated:", plaintext)
-            return False
-    print("All messages have been decrypted correctly")
-    print(json.dumps(decrypted_messages, indent=3))    
+    expected_output = decrypt_all_sol(encrypted_messages, True)
+    test_output = test_func(encrypted_messages)
+
+    if type(test_output) != type([]):
+        print("❌❌ Your implementation did not correctly generate the correct type of output")
+        print("Your code should generate a list of messages that have been decrypted")
+        print("Your function returned output of the type:", type(test_output))
+        return
+
+    if len(expected_output) != len(test_output):
+        print("❌❌ Your implementation did not correctly generate output for all the encrypted messages")
+        print("Expected number of messages decrypted:", len(expected_output))
+        print("Number of messages decrypted by your implementation:", len(test_output))
+        return
+
+    else:
+        for i, message in enumerate(test_output):
+            if message != expected_output[i]:
+                print(f"❌❌ Your implementation produced incorrect output for encrypted_messages[{i}]:")
+                if type(message) != type(expected_output[i]):
+                   print("   Your code produced messages of the wrong data type:")
+                   print("   Expected message data type:", type(expected_output[i]))
+                   print("   Message data type generated:", type(message))
+                   return  
+                print("  Ciphertext:", encrypted_messages[i])
+                print("  Incorrect plaintext:", message)
+                return 
     
+        print("✔✔ Your implementation is correct!")
+        print("Here are the decrypted messages:")
+        print(json.dumps(test_output, indent=3))
+        print()
+        print("🎉🎉🎉🎉🎉🎉🎉 You have successfully helped thwart the group's nefarious activities and have saved millions of lives! The I.M.F thanks you for you brilliant efforts 🎉🎉🎉🎉🎉🎉🎉🎉")
 
