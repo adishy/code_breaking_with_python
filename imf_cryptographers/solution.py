@@ -1,4 +1,5 @@
 import json
+import os
 from random import randrange
 
 messages = [
@@ -53,8 +54,9 @@ messages = [
 ]
 
 def load_dictionary():
-    dictionary_filename = "dictionary.txt"
-    dictionary_file = open(dictionary_filename, 'r')
+    dictionary_dir = os.path.dirname(os.path.realpath(__file__))
+    dictionary_path = os.path.join(dictionary_dir, "dictionary.txt")
+    dictionary_file = open(dictionary_path, 'r')
     dictionary = set()
     for line in dictionary_file.readlines():
         line = line.strip()

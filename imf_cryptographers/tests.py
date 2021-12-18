@@ -1,6 +1,6 @@
 import json
 from random import randrange, sample
-from imf_cryptographers.solution import decrypt_all_sol
+from imf_cryptographers.solution import decrypt_all_sol, load_dictionary
 
 def test_convert_to_natural_index(test_func):
     for i in range(26):
@@ -37,8 +37,7 @@ def encrypt_word_sol(word, shift):
     return encrypted_word
 
 def test_encrypt_word(test_func):
-    dictionary_filename = "dictionary.txt"
-    dictionary = open(dictionary_filename).read().splitlines()
+    dictionary = list(load_dictionary())
     sampled = sample(dictionary, 25)
 
     for i, word in enumerate(sampled):
